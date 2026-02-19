@@ -141,121 +141,108 @@ const LandingPage = () => {
                     </GlassCard>
                 </Box>
                 
-                {/* Feature 1: Generate */}
-                <Box sx={{ mb: 12, position: 'relative' }}>
-                    {/* Background Glow */}
-                    <Box sx={{ position: 'absolute', top: '50%', left: '0', transform: 'translateY(-50%)', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, rgba(0,0,0,0) 70%)', zIndex: -1, pointerEvents: 'none' }} />
-                    <Grid container spacing={8} alignItems="center">
-                        <Grid item xs={12} md={6}>
-                            <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
-                                <Chip label="For Hosts" color="warning" sx={{ mb: 3, bgcolor: 'rgba(245, 158, 11, 0.1)', color: '#F59E0B', border: '1px solid rgba(245, 158, 11, 0.2)' }} />
-                                <Typography variant="h3" fontWeight="bold" sx={{ mb: 3 }}>Turn Sunlight into Passive Income.</Typography>
-                                <Typography variant="h6" color="text.secondary" sx={{ mb: 4, lineHeight: 1.8, fontWeight: 400 }}>
-                                    Your rooftop solar panels perform best when you aren't home. Instead of letting that power fade or selling it specifically to the grid for pennies, sell it to your neighbors at a premium.
-                                </Typography>
-                                <Button variant="text" size="large" sx={{ color: '#F59E0B', p: 0, '&:hover': { bgcolor: 'transparent', textDecoration: 'underline' } }}>
-                                    Start Hosting &rarr;
-                                </Button>
-                            </motion.div>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <GlassCard sx={{ p: 0, overflow: 'hidden', transform: 'rotate(2deg)', transition: 'transform 0.3s ease', '&:hover': { transform: 'rotate(0deg)' } }}>
-                                <Box sx={{ height: '300px', background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <BoltIcon sx={{ fontSize: '150px', color: 'rgba(245, 158, 11, 0.5)' }} />
+                {/* Bento Grid Features */}
+                <Box sx={{ mb: 20 }}>
+                     <Typography variant="h3" fontWeight="bold" sx={{ textAlign: 'center', mb: 8 }}>
+                        The Ecosystem
+                    </Typography>
+                    <Grid container spacing={3}>
+                        {/* 1. Host Card (Large) */}
+                        <Grid item xs={12} md={8}>
+                            <GlassCard 
+                                sx={{ 
+                                    height: '400px', 
+                                    p: 6, 
+                                    position: 'relative', 
+                                    overflow: 'hidden',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'flex-end',
+                                    background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%)',
+                                    transition: 'all 0.3s ease',
+                                    '&:hover': { transform: 'scale(1.01)', background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(245, 158, 11, 0.05) 100%)' }
+                                }}
+                            >
+                                <Box sx={{ position: 'absolute', top: 0, right: 0, p: 4, opacity: 0.1 }}>
+                                    <BoltIcon sx={{ fontSize: '200px', color: '#F59E0B' }} />
                                 </Box>
-                                <Box sx={{ p: 4, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                                        <Typography variant="body1" color="text.secondary">Daily Earnings</Typography>
-                                        <Typography variant="h6" color="success.main">+ ₹450.00</Typography>
-                                    </Box>
-                                    <Box sx={{ height: '8px', width: '100%', bgcolor: 'rgba(255,255,255,0.1)', borderRadius: 4, overflow: 'hidden' }}>
-                                        <Box sx={{ height: '100%', width: '75%', bgcolor: '#F59E0B' }} />
-                                    </Box>
-                                </Box>
-                            </GlassCard>
-                        </Grid>
-                    </Grid>
-                </Box>
-
-                {/* Connecting Line (Desktop only) */}
-                <Box sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'center', mb: 4 }}>
-                    <Box sx={{ width: '2px', height: '100px', background: 'linear-gradient(to bottom, rgba(245, 158, 11, 0.5), rgba(59, 130, 246, 0.5))' }} />
-                </Box>
-
-                {/* Feature 2: Connect */}
-                <Box sx={{ mb: 12, position: 'relative' }}>
-                     {/* Background Glow */}
-                     <Box sx={{ position: 'absolute', top: '50%', right: '0', transform: 'translateY(-50%)', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(0,0,0,0) 70%)', zIndex: -1, pointerEvents: 'none' }} />
-                    <Grid container spacing={8} alignItems="center" direction={{ xs: 'column-reverse', md: 'row' }}>
-                        <Grid item xs={12} md={6}>
-                            <GlassCard sx={{ p: 0, overflow: 'hidden', transform: 'rotate(-2deg)', transition: 'transform 0.3s ease', '&:hover': { transform: 'rotate(0deg)' } }}>
-                                <Box sx={{ height: '300px', background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <Box sx={{ position: 'relative' }}>
-                                        <Box sx={{ width: '120px', height: '120px', border: '2px solid #3B82F6', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'pulse 2s infinite' }}>
-                                            <Box sx={{ width: '12px', height: '12px', bgcolor: '#3B82F6', borderRadius: '50%' }} />
-                                        </Box>
-                                        <Box sx={{ position: 'absolute', top: '-40px', right: '-40px', bgcolor: 'rgba(26, 34, 53, 0.9)', p: 2, borderRadius: 3, border: '1px solid rgba(59, 130, 246, 0.3)' }}>
-                                            <Typography variant="caption" color="text.secondary">Station Found</Typography>
-                                            <Typography variant="body2" fontWeight="bold">0.8 km away</Typography>
-                                        </Box>
-                                    </Box>
+                                <Box sx={{ position: 'relative', zIndex: 2 }}>
+                                    <Chip label="For Hosts" sx={{ bgcolor: '#F59E0B', color: 'black', fontWeight: 'bold', mb: 2 }} />
+                                    <Typography variant="h3" fontWeight="bold" sx={{ mb: 1 }}>Turn Sunlight into Income</Typography>
+                                    <Typography variant="h6" color="text.secondary" sx={{ maxWidth: '600px', fontWeight: 400 }}>
+                                        Monetize your rooftop surplus. Sell directly to neighbors via smart contracts, bypassing grid inefficiencies.
+                                    </Typography>
                                 </Box>
                             </GlassCard>
                         </Grid>
-                        <Grid item xs={12} md={6}>
-                            <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
-                                <Chip label="For Drivers" color="primary" sx={{ mb: 3, bgcolor: 'rgba(59, 130, 246, 0.1)', color: '#3B82F6', border: '1px solid rgba(59, 130, 246, 0.2)' }} />
-                                <Typography variant="h3" fontWeight="bold" sx={{ mb: 3 }}>Charge Anywhere. <br /> Pay Less.</Typography>
-                                <Typography variant="h6" color="text.secondary" sx={{ mb: 4, lineHeight: 1.8, fontWeight: 400 }}>
-                                    Find private charging spots in your neighborhood. No queues, no app subscriptions, just pure energy at fair rates.
-                                </Typography>
-                                <Button variant="text" size="large" sx={{ color: '#3B82F6', p: 0, '&:hover': { bgcolor: 'transparent', textDecoration: 'underline' } }}>
-                                    Find Stations &rarr;
-                                </Button>
-                            </motion.div>
-                        </Grid>
-                    </Grid>
-                </Box>
 
-                {/* Connecting Line (Desktop only) */}
-                <Box sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'center', mb: 4 }}>
-                    <Box sx={{ width: '2px', height: '100px', background: 'linear-gradient(to bottom, rgba(59, 130, 246, 0.5), rgba(34, 197, 94, 0.5))' }} />
-                </Box>
-
-                {/* Feature 3: Transact */}
-                <Box sx={{ mb: 16, position: 'relative' }}>
-                     {/* Background Glow */}
-                     <Box sx={{ position: 'absolute', top: '50%', left: '0', transform: 'translateY(-50%)', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(34, 197, 94, 0.08) 0%, rgba(0,0,0,0) 70%)', zIndex: -1, pointerEvents: 'none' }} />
-                     <Grid container spacing={8} alignItems="center">
-                        <Grid item xs={12} md={6}>
-                            <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
-                                <Chip label="Technology" color="success" sx={{ mb: 3, bgcolor: 'rgba(34, 197, 94, 0.1)', color: '#22C55E', border: '1px solid rgba(34, 197, 94, 0.2)' }} />
-                                <Typography variant="h3" fontWeight="bold" sx={{ mb: 3 }}>Trustless & Instant.</Typography>
-                                <Typography variant="h6" color="text.secondary" sx={{ mb: 4, lineHeight: 1.8, fontWeight: 400 }}>
-                                    Powered by Ethereum smart contracts. Payments settle the moment electrons flow. No middlemen taking a cut.
-                                </Typography>
-                                <Button variant="text" size="large" sx={{ color: '#22C55E', p: 0, '&:hover': { bgcolor: 'transparent', textDecoration: 'underline' } }}>
-                                    View Contract &rarr;
-                                </Button>
-                            </motion.div>
+                        {/* 2. Driver Card (Tall/Side) */}
+                        <Grid item xs={12} md={4}>
+                             <GlassCard 
+                                sx={{ 
+                                    height: '400px', 
+                                    p: 6, 
+                                    position: 'relative', 
+                                    overflow: 'hidden',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'flex-end',
+                                    background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%)',
+                                     transition: 'all 0.3s ease',
+                                    '&:hover': { transform: 'scale(1.02)', background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 100%)' }
+                                }}
+                            >
+                                <Box sx={{ position: 'absolute', top: '-20px', right: '-20px', width: '150px', height: '150px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(0,0,0,0) 70%)' }} />
+                                <Box sx={{ position: 'relative', zIndex: 2 }}>
+                                    <Chip label="For Drivers" sx={{ bgcolor: '#3B82F6', color: 'white', fontWeight: 'bold', mb: 2 }} />
+                                    <Typography variant="h4" fontWeight="bold" sx={{ mb: 1 }}>Charge Anywhere</Typography>
+                                    <Typography variant="body1" color="text.secondary">
+                                        Access a decentralized network of private chargers. Fair rates, no subscriptions.
+                                    </Typography>
+                                </Box>
+                            </GlassCard>
                         </Grid>
-                        <Grid item xs={12} md={6}>
-                             <GlassCard sx={{ p: 4, transform: 'rotate(2deg)', transition: 'transform 0.3s ease', '&:hover': { transform: 'rotate(0deg)' } }}>
-                                <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                                    <Avatar sx={{ bgcolor: 'rgba(34, 197, 94, 0.2)', color: '#22C55E', mr: 2 }}><Typography variant="h6">₹</Typography></Avatar>
-                                    <Box>
-                                        <Typography variant="body1" fontWeight="bold">Payment Received</Typography>
-                                        <Typography variant="caption" color="text.secondary">0x8a...4b21 • Just now</Typography>
-                                    </Box>
-                                    <Typography variant="body1" color="success.main" sx={{ ml: 'auto', fontWeight: 'bold' }}>+ ₹210.00</Typography>
-                                </Box>
-                                <Box sx={{ display: 'flex', alignItems: 'center', opacity: 0.6 }}>
-                                    <Avatar sx={{ bgcolor: 'rgba(255,255,255,0.1)', color: 'white', mr: 2, width: 32, height: 32 }}><Typography variant="caption">Tx</Typography></Avatar>
-                                    <Box>
-                                        <Typography variant="body2">Smart Contract Interaction</Typography>
-                                        <Typography variant="caption" color="text.secondary">Verified</Typography>
-                                    </Box>
-                                </Box>
+
+                        {/* 3. Tech Card (Wide Bottom) */}
+                        <Grid item xs={12}>
+                             <GlassCard 
+                                sx={{ 
+                                    height: '300px', 
+                                    p: 6, 
+                                    position: 'relative', 
+                                    overflow: 'hidden',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%)',
+                                     transition: 'all 0.3s ease',
+                                    '&:hover': { transform: 'scale(1.01)', background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%)' }
+                                }}
+                            >
+                                <Grid container spacing={4} alignItems="center">
+                                    <Grid item xs={12} md={6}>
+                                        <Chip label="Powered by Ethereum" sx={{ bgcolor: '#22C55E', color: 'black', fontWeight: 'bold', mb: 2 }} />
+                                        <Typography variant="h3" fontWeight="bold" sx={{ mb: 1 }}>Trustless Settlement</Typography>
+                                        <Typography variant="h6" color="text.secondary" sx={{ fontWeight: 400 }}>
+                                            Payments execute automatically when energy flows. No middlemen, no delays, complete transparency.
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
+                                         <Box sx={{ 
+                                             p: 3, 
+                                             border: '1px solid rgba(34, 197, 94, 0.3)', 
+                                             borderRadius: 4, 
+                                             bgcolor: 'rgba(0,0,0,0.3)',
+                                             backdropFilter: 'blur(10px)',
+                                             fontFamily: 'monospace',
+                                             color: '#22C55E'
+                                         }}>
+                                            <Typography variant="body2">{`function settlePayment() public payable {`}</Typography>
+                                            <Typography variant="body2" sx={{ pl: 2 }}>{`require(energyDelivered > 0, "No energy");`}</Typography>
+                                            <Typography variant="body2" sx={{ pl: 2 }}>{`host.transfer(msg.value);`}</Typography>
+                                            <Typography variant="body2">{`}`}</Typography>
+                                         </Box>
+                                    </Grid>
+                                </Grid>
                             </GlassCard>
                         </Grid>
                     </Grid>
