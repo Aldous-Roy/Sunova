@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import BoltIcon from '@mui/icons-material/Bolt';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import TwitterIcon from '@mui/icons-material/Twitter';
+import SpeedIcon from '@mui/icons-material/Speed';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -141,111 +142,118 @@ const LandingPage = () => {
                     </GlassCard>
                 </Box>
                 
-                {/* Bento Grid Features */}
+                {/* Expanding Ecosystem Carousel */}
                 <Box sx={{ mb: 20 }}>
                      <Typography variant="h3" fontWeight="bold" sx={{ textAlign: 'center', mb: 8 }}>
                         The Ecosystem
                     </Typography>
-                    <Grid container spacing={3}>
-                        {/* 1. Host Card (Large) */}
-                        <Grid item xs={12} md={8}>
-                            <GlassCard 
-                                sx={{ 
-                                    height: '400px', 
-                                    p: 6, 
-                                    position: 'relative', 
-                                    overflow: 'hidden',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    justifyContent: 'flex-end',
-                                    background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%)',
-                                    transition: 'all 0.3s ease',
-                                    '&:hover': { transform: 'scale(1.01)', background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(245, 158, 11, 0.05) 100%)' }
-                                }}
-                            >
-                                <Box sx={{ position: 'absolute', top: 0, right: 0, p: 4, opacity: 0.1 }}>
-                                    <BoltIcon sx={{ fontSize: '200px', color: '#F59E0B' }} />
-                                </Box>
-                                <Box sx={{ position: 'relative', zIndex: 2 }}>
-                                    <Chip label="For Hosts" sx={{ bgcolor: '#F59E0B', color: 'black', fontWeight: 'bold', mb: 2 }} />
-                                    <Typography variant="h3" fontWeight="bold" sx={{ mb: 1 }}>Turn Sunlight into Income</Typography>
-                                    <Typography variant="h6" color="text.secondary" sx={{ maxWidth: '600px', fontWeight: 400 }}>
-                                        Monetize your rooftop surplus. Sell directly to neighbors via smart contracts, bypassing grid inefficiencies.
-                                    </Typography>
-                                </Box>
-                            </GlassCard>
-                        </Grid>
+                    <Box sx={{ 
+                        display: 'flex', 
+                        flexDirection: { xs: 'column', md: 'row' }, 
+                        gap: 2, 
+                        height: { xs: 'auto', md: '500px' },
+                        minHeight: { xs: '800px', md: '500px' } 
+                    }}>
+                        {[
+                            { 
+                                id: 'host', 
+                                title: 'For Hosts', 
+                                subtitle: 'Turn Sunlight into Income',
+                                desc: 'Monetize your rooftop surplus. Sell directly to neighbors via smart contracts, bypassing grid inefficiencies.',
+                                color: '#F59E0B',
+                                bg: 'linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.05) 100%)',
+                                icon: <BoltIcon sx={{ fontSize: '100px', color: '#F59E0B' }} />
+                            },
+                            { 
+                                id: 'driver', 
+                                title: 'For Drivers', 
+                                subtitle: 'Charge Anywhere',
+                                desc: 'Access a decentralized network of private chargers. Fair rates, no subscriptions, just pure energy.',
+                                color: '#3B82F6',
+                                bg: 'linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.05) 100%)',
+                                icon: <SpeedIcon sx={{ fontSize: '100px', color: '#3B82F6' }} />
+                            },
+                            { 
+                                id: 'tech', 
+                                title: 'Technology', 
+                                subtitle: 'Trustless Settlement',
+                                desc: 'Powered by Ethereum smart contracts. Payments execute automatically when energy flows. No middlemen.',
+                                color: '#22C55E',
+                                bg: 'linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.05) 100%)',
+                                icon: <GitHubIcon sx={{ fontSize: '100px', color: '#22C55E' }} />
+                            }
+                        ].map((card) => {
+                            const [isHovered, setIsHovered] = React.useState(false);
+                            // We use a local state for hover to drive the expansion
+                             return (
+                                <motion.div
+                                    key={card.id}
+                                    layout
+                                    onHoverStart={() => setIsHovered(true)}
+                                    onHoverEnd={() => setIsHovered(false)}
+                                    style={{
+                                        flex: isHovered ? 3 : 1,
+                                        position: 'relative',
+                                        overflow: 'hidden',
+                                        borderRadius: '24px',
+                                        background: card.bg,
+                                        border: `1px solid ${card.color}30`,
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        justifyContent: 'flex-end',
+                                        padding: '2rem'
+                                    }}
+                                    transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                                >
+                                     {/* Background Icon (Decorative) */}
+                                    <Box sx={{ position: 'absolute', top: -20, right: -20, opacity: 0.1, transform: 'rotate(15deg)' }}>
+                                        {card.icon}
+                                    </Box>
 
-                        {/* 2. Driver Card (Tall/Side) */}
-                        <Grid item xs={12} md={4}>
-                             <GlassCard 
-                                sx={{ 
-                                    height: '400px', 
-                                    p: 6, 
-                                    position: 'relative', 
-                                    overflow: 'hidden',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    justifyContent: 'flex-end',
-                                    background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%)',
-                                     transition: 'all 0.3s ease',
-                                    '&:hover': { transform: 'scale(1.02)', background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 100%)' }
-                                }}
-                            >
-                                <Box sx={{ position: 'absolute', top: '-20px', right: '-20px', width: '150px', height: '150px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(0,0,0,0) 70%)' }} />
-                                <Box sx={{ position: 'relative', zIndex: 2 }}>
-                                    <Chip label="For Drivers" sx={{ bgcolor: '#3B82F6', color: 'white', fontWeight: 'bold', mb: 2 }} />
-                                    <Typography variant="h4" fontWeight="bold" sx={{ mb: 1 }}>Charge Anywhere</Typography>
-                                    <Typography variant="body1" color="text.secondary">
-                                        Access a decentralized network of private chargers. Fair rates, no subscriptions.
-                                    </Typography>
-                                </Box>
-                            </GlassCard>
-                        </Grid>
+                                    {/* Content Container */}
+                                    <Box sx={{ position: 'relative', zIndex: 2, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+                                        
+                                        {/* Icon & Title */}
+                                        <motion.div layout="position" style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                                             <Avatar sx={{ bgcolor: `${card.color}20`, color: card.color, mr: 2 }}>
+                                                {card.id === 'host' ? <BoltIcon /> : card.id === 'driver' ? <SpeedIcon /> : <GitHubIcon />}
+                                             </Avatar>
+                                             <Typography variant="h5" fontWeight="bold" color="white" sx={{ whiteSpace: 'nowrap' }}>
+                                                {card.title}
+                                             </Typography>
+                                        </motion.div>
 
-                        {/* 3. Tech Card (Wide Bottom) */}
-                        <Grid item xs={12}>
-                             <GlassCard 
-                                sx={{ 
-                                    height: '300px', 
-                                    p: 6, 
-                                    position: 'relative', 
-                                    overflow: 'hidden',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%)',
-                                     transition: 'all 0.3s ease',
-                                    '&:hover': { transform: 'scale(1.01)', background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%)' }
-                                }}
-                            >
-                                <Grid container spacing={4} alignItems="center">
-                                    <Grid item xs={12} md={6}>
-                                        <Chip label="Powered by Ethereum" sx={{ bgcolor: '#22C55E', color: 'black', fontWeight: 'bold', mb: 2 }} />
-                                        <Typography variant="h3" fontWeight="bold" sx={{ mb: 1 }}>Trustless Settlement</Typography>
-                                        <Typography variant="h6" color="text.secondary" sx={{ fontWeight: 400 }}>
-                                            Payments execute automatically when energy flows. No middlemen, no delays, complete transparency.
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
-                                         <Box sx={{ 
-                                             p: 3, 
-                                             border: '1px solid rgba(34, 197, 94, 0.3)', 
-                                             borderRadius: 4, 
-                                             bgcolor: 'rgba(0,0,0,0.3)',
-                                             backdropFilter: 'blur(10px)',
-                                             fontFamily: 'monospace',
-                                             color: '#22C55E'
-                                         }}>
-                                            <Typography variant="body2">{`function settlePayment() public payable {`}</Typography>
-                                            <Typography variant="body2" sx={{ pl: 2 }}>{`require(energyDelivered > 0, "No energy");`}</Typography>
-                                            <Typography variant="body2" sx={{ pl: 2 }}>{`host.transfer(msg.value);`}</Typography>
-                                            <Typography variant="body2">{`}`}</Typography>
-                                         </Box>
-                                    </Grid>
-                                </Grid>
-                            </GlassCard>
-                        </Grid>
-                    </Grid>
+                                        {/* Expanded Content */}
+                                        <motion.div
+                                            initial={{ opacity: 0, height: 0 }}
+                                            animate={{ opacity: isHovered ? 1 : 0, height: isHovered ? 'auto' : 0 }}
+                                            transition={{ duration: 0.3 }}
+                                            style={{ overflow: 'hidden' }}
+                                        >
+                                            <Typography variant="h3" fontWeight="bold" sx={{ mb: 2, lineHeight: 1.1 }}>
+                                                {card.subtitle}
+                                            </Typography>
+                                            <Typography variant="body1" color="text.secondary" sx={{ mb: 4, maxWidth: '500px' }}>
+                                                {card.desc}
+                                            </Typography>
+                                            <Button 
+                                                variant="outlined" 
+                                                sx={{ 
+                                                    borderColor: card.color, 
+                                                    color: card.color, 
+                                                    borderRadius: 50,
+                                                    '&:hover': { bgcolor: `${card.color}20`, borderColor: card.color }
+                                                }}
+                                            >
+                                                Learn More
+                                            </Button>
+                                        </motion.div>
+                                    </Box>
+                                </motion.div>
+                            );
+                        })}
+                    </Box>
                 </Box>
 
                 {/* CTA Section */}
