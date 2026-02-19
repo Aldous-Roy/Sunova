@@ -24,9 +24,10 @@ function App() {
 
   // Simulation Loop
   useEffect(() => {
+    tick(); // Initial sync
     const interval = setInterval(() => {
       tick();
-    }, 3000); // 3 seconds per tick (15 simulated minutes)
+    }, 60000); // 60 seconds per tick (Real Time)
 
     return () => clearInterval(interval);
   }, [tick]);

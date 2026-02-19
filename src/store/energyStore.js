@@ -40,16 +40,12 @@ const useEnergyStore = create(
 
       // Simulation Tick (to be called every few seconds)
       tick: () => {
-        const { hour, minute, historicalData, batteryLevel, bookings } = get();
+        const { historicalData, batteryLevel, bookings } = get();
         
-        // Advance time
-        let newMinute = minute + 15;
-        let newHour = hour;
-        if (newMinute >= 60) {
-          newMinute = 0;
-          newHour = hour + 1;
-          if (newHour >= 24) newHour = 0;
-        }
+        // Use Real Time
+        const now = new Date();
+        const newHour = now.getHours();
+        const newMinute = now.getMinutes();
 
         const timeFloat = newHour + newMinute / 60;
         
@@ -64,15 +60,18 @@ const useEnergyStore = create(
         const totalConsumption = cons + evLoad;
         let currentSurplus = solar - totalConsumption;
 
+        // Time step calculation (1 minute = 1/60 hour)
+        const timeStep = 1 / 60;
+
         // Battery Logic
         let newBattery = batteryLevel;
         if (currentSurplus > 0) {
           if (newBattery < 100) {
-            newBattery += (currentSurplus / 4); // charging
+            newBattery += (currentSurplus * timeStep); // charging based on real time
           }
         } else {
           if (newBattery > 0) {
-            newBattery -= (Math.abs(currentSurplus) / 4); // discharging
+            newBattery -= (Math.abs(currentSurplus) * timeStep); // discharging based on real time
           }
         }
         
@@ -84,8 +83,8 @@ const useEnergyStore = create(
         // Grid Feed-in tariff: 3 INR
         // EV Charging tariff: 14 INR
         let earning = 0;
-        if (gridExport > 0) earning += gridExport * 0.25 * 3; // 15 min slot
-        if (activeBookings.length > 0) earning += evLoad * 0.25 * 14;
+        if (gridExport > 0) earning += gridExport * timeStep * 3; 
+        if (activeBookings.length > 0) earning += evLoad * timeStep * 14;
 
         const newDataPoint = {
           time: `${newHour.toString().padStart(2, '0')}:${newMinute.toString().padStart(2, '0')}`,
