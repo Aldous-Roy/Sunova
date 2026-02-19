@@ -84,7 +84,6 @@ const CompliancePage = () => {
             <GlassCard delay={0.1}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                     <Typography variant="h6" sx={{ flexGrow: 1 }}>Real-time Audit Trail</Typography>
-                    <RefreshIcon sx={{ opacity: 0.5, cursor: 'pointer' }} />
                 </Box>
                 <TableContainer component={Box} sx={{ maxHeight: 'calc(100vh - 250px)' }}>
                     <Table stickyHeader>

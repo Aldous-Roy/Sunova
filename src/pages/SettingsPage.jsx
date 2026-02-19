@@ -38,17 +38,6 @@ const SettingsPage = () => {
                             Manage your profile, security, and preferences
                         </Typography>
                     </Box>
-                    <Button 
-                        variant="contained" 
-                        startIcon={<SaveIcon />}
-                        sx={{ 
-                            background: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
-                            boxShadow: '0 4px 14px 0 rgba(59, 130, 246, 0.5)',
-                            px: 4, py: 1
-                        }}
-                    >
-                        Save Changes
-                    </Button>
                 </Box>
 
                 <Grid container spacing={4}>
@@ -69,19 +58,6 @@ const SettingsPage = () => {
                                 >
                                     {name.charAt(0)}
                                 </Avatar>
-                                <IconButton 
-                                    sx={{ 
-                                        position: 'absolute', 
-                                        bottom: 0, 
-                                        right: 0, 
-                                        bgcolor: '#3B82F6', 
-                                        '&:hover': { bgcolor: '#2563EB' },
-                                        boxShadow: 3
-                                    }}
-                                    size="small"
-                                >
-                                    <EditIcon sx={{ fontSize: 16, color: '#fff' }} />
-                                </IconButton>
                             </Box>
                             
                             <Typography variant="h5" fontWeight="bold" gutterBottom>{name}</Typography>
@@ -205,9 +181,9 @@ const SettingsPage = () => {
                                     <SecurityIcon sx={{ color: '#EF4444', mr: 2 }} />
                                     <Typography variant="h6" fontWeight="bold">Security</Typography>
                                 </Box>
-                                <Button variant="outlined" color="error" startIcon={<LockIcon />}>
-                                    Change Password
-                                </Button>
+                                <Typography variant="body2" color="text.secondary">
+                                    Two-factor authentication is enabled for your account.
+                                </Typography>
                             </GlassCard>
 
                         </Box>

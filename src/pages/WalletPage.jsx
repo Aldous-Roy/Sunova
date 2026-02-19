@@ -109,14 +109,7 @@ const WalletPage = () => {
                                     <Chip label="+12.5% this month" color="success" size="small" variant="outlined" />
                                 </Box>
                                 
-                                <Box sx={{ display: 'flex', gap: 2 }}>
-                                    <Button variant="contained" color="primary" size="large" sx={{ borderRadius: 3, px: 4, flexGrow: 1 }}>
-                                        Withdraw Funds
-                                    </Button>
-                                    <Button variant="outlined" color="primary" size="large" sx={{ borderRadius: 3, px: 4, flexGrow: 1 }}>
-                                        Add Money
-                                    </Button>
-                                </Box>
+
                             </GlassCard>
                         </Grid>
 

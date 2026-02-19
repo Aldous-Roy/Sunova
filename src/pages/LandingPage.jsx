@@ -237,17 +237,7 @@ const LandingPage = () => {
                                             <Typography variant="body1" color="text.secondary" sx={{ mb: 4, maxWidth: '500px' }}>
                                                 {card.desc}
                                             </Typography>
-                                            <Button 
-                                                variant="outlined" 
-                                                sx={{ 
-                                                    borderColor: card.color, 
-                                                    color: card.color, 
-                                                    borderRadius: 50,
-                                                    '&:hover': { bgcolor: `${card.color}20`, borderColor: card.color }
-                                                }}
-                                            >
-                                                Learn More
-                                            </Button>
+
                                         </motion.div>
                                     </Box>
                                 </motion.div>
@@ -310,8 +300,7 @@ const LandingPage = () => {
                     </Grid>
                     <Grid item>
                         <Box sx={{ display: 'flex', gap: 2 }}>
-                            <IconButton size="small" sx={{ color: 'text.secondary', '&:hover': { color: 'white' } }}><GitHubIcon /></IconButton>
-                            <IconButton size="small" sx={{ color: 'text.secondary', '&:hover': { color: 'white' } }}><TwitterIcon /></IconButton>
+                            {/* Social icons removed */}
                         </Box>
                     </Grid>
                 </Grid>
