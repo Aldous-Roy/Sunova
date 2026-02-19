@@ -273,16 +273,19 @@ const LandingPage = () => {
                              <Button 
                                 variant="contained" 
                                 size="large" 
-                                onClick={handleStart}
+                                onClick={() => navigate('/login')}
                                 sx={{ 
                                     bgcolor: 'white',
-                                    color: '#2563EB',
+                                    color: '#FFFFFF',
                                     fontSize: '1.2rem',
                                     fontWeight: 'bold',
                                     px: 6,
                                     py: 2,
                                     borderRadius: 50,
-                                    '&:hover': { bgcolor: 'rgba(255,255,255,0.9)' }
+                                    position: 'relative', 
+                                    zIndex: 2,
+                                    '&:hover': { bgcolor: '#f8fafc', transform: 'translateY(-2px)', boxShadow: '0 10px 20px rgba(0,0,0,0.1)' },
+                                    transition: 'all 0.3s ease'
                                 }}
                             >
                                 Get Started Now
