@@ -45,15 +45,15 @@ const EVDashboard = () => {
     const [open, setOpen] = useState(false);
     const [bookingSuccess, setBookingSuccess] = useState(false);
 
-    // Mock Location Data (Bangalore Center-ish)
-    const userLocation = [12.9716, 77.5946];
+    // Mock Location Data (Chennai Center)
+    const userLocation = [13.0827, 80.2707];
     
     const hosts = [
-        { id: 1, name: 'EcoHaven Residence', distance: 0.8, availableKw: 4.2, coords: [12.9750, 77.5980] },
-        { id: 2, name: 'GreenRoof Villa', distance: 1.2, availableKw: 2.5, coords: [12.9680, 77.5900] },
-        { id: 3, name: 'SunnySide Apts', distance: 0.5, availableKw: 0, coords: [12.9730, 77.5920] }, // Unavailable
-        { id: 4, name: 'Solaris Desktop', distance: 2.1, availableKw: 6.0, coords: [12.9800, 77.6000] },
-        { id: 5, name: 'TechPark Solar', distance: 3.5, availableKw: 12.0, coords: [12.9600, 77.6100] },
+        { id: 1, name: 'EcoHaven Residence', distance: 0.8, availableKw: 4.2, coords: [13.0850, 80.2750] },
+        { id: 2, name: 'GreenRoof Villa', distance: 1.2, availableKw: 2.5, coords: [13.0780, 80.2650] },
+        { id: 3, name: 'SunnySide Apts', distance: 0.5, availableKw: 0, coords: [13.0880, 80.2800] }, // Unavailable
+        { id: 4, name: 'Solaris Desktop', distance: 2.1, availableKw: 6.0, coords: [13.0700, 80.2600] },
+        { id: 5, name: 'TechPark Solar', distance: 3.5, availableKw: 12.0, coords: [13.0900, 80.2500] },
     ];
 
     const handleOpen = (host) => {
