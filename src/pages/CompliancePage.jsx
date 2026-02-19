@@ -1,8 +1,12 @@
 import React from 'react';
-import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Chip, Paper } from '@mui/material';
+import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Chip, Button } from '@mui/material';
 import GlassCard from '../components/GlassCard';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import TableChartIcon from '@mui/icons-material/TableChart';
 
 const CompliancePage = () => {
     const mockAuditLog = [
@@ -12,19 +16,68 @@ const CompliancePage = () => {
         { id: 4, time: '09:30 AM', event: 'New Host KYC Approved', status: 'success', details: 'Host ID: #HST-9921' },
     ];
 
+    const downloadPDF = () => {
+        const doc = new jsPDF();
+        doc.text("Compliance Audit Log", 14, 20);
+        
+        const tableColumn = ["Time", "Event", "Status", "Details"];
+        const tableRows = mockAuditLog.map(log => [log.time, log.event, log.status.toUpperCase(), log.details]);
+
+        autoTable(doc, {
+            startY: 30,
+            head: [tableColumn],
+            body: tableRows,
+        });
+
+        doc.save("compliance_log.pdf");
+    };
+
+    const downloadCSV = () => {
+        const headers = ["Time,Event,Status,Details"];
+        const rows = mockAuditLog.map(log => `${log.time},"${log.event}",${log.status},"${log.details}"`);
+        const csvContent = "data:text/csv;charset=utf-8," + [headers, ...rows].join("\n");
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "compliance_log.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     return (
         <Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 4 }}>
-                <Typography variant="h4" fontWeight="bold">Compliance Audit Log</Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <Chip 
-                        icon={<VerifiedUserIcon />} 
-                        label="System Status: COMPLIANT" 
-                        color="success" 
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: 'center', mb: 4, gap: 2 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Typography variant="h4" fontWeight="bold">Compliance Audit Log</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                        <Chip 
+                            icon={<VerifiedUserIcon />} 
+                            label="System Status: COMPLIANT" 
+                            color="success" 
+                            variant="outlined" 
+                            sx={{ p: 1, borderRadius: 2 }}
+                        />
+                        <Typography variant="body2" color="text.secondary">Last Audit: Just now</Typography>
+                    </Box>
+                </Box>
+                <Box sx={{ display: 'flex', gap: 2 }}>
+                    <Button 
                         variant="outlined" 
-                        sx={{ p: 1, borderRadius: 2 }}
-                    />
-                    <Typography variant="body2" color="text.secondary">Last Audit: Just now</Typography>
+                        startIcon={<TableChartIcon />} 
+                        onClick={downloadCSV}
+                        sx={{ borderColor: 'rgba(255,255,255,0.2)', color: 'text.primary' }}
+                    >
+                        Export CSV
+                    </Button>
+                    <Button 
+                        variant="contained" 
+                        startIcon={<PictureAsPdfIcon />} 
+                        onClick={downloadPDF}
+                        sx={{ background: 'linear-gradient(45deg, #EF4444, #F87171)' }}
+                    >
+                        Download Report
+                    </Button>
                 </Box>
             </Box>
 

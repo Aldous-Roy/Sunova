@@ -1,17 +1,48 @@
 import React from 'react';
-import { Box, Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar, Chip, Divider } from '@mui/material';
+import { Box, Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar, Chip, Divider, Button } from '@mui/material';
 import GlassCard from './GlassCard';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ElectricCarIcon from '@mui/icons-material/ElectricCar';
-import BoltIcon from '@mui/icons-material/Bolt';
+import DownloadIcon from '@mui/icons-material/Download';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 const TransactionHistory = ({ transactions }) => {
+    const downloadStatement = () => {
+        const doc = new jsPDF();
+        doc.text("Transaction Statement", 14, 20);
+        
+        const tableColumn = ["Date", "Description", "Type", "Amount", "Status"];
+        const tableRows = transactions.map(tx => [
+            tx.date, 
+            tx.desc, 
+            tx.type.toUpperCase(), 
+            `Rs ${tx.amount.toFixed(2)}`, 
+            tx.status
+        ]);
+
+        autoTable(doc, {
+            startY: 30,
+            head: [tableColumn],
+            body: tableRows,
+        });
+
+        doc.save("statement.pdf");
+    };
+
     return (
         <GlassCard sx={{ height: '100%' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                 <Typography variant="h6" fontWeight="bold">Recent Transactions</Typography>
-                <Chip label="This Month" size="small" variant="outlined" color="primary" />
+                <Button 
+                    size="small" 
+                    startIcon={<DownloadIcon />} 
+                    onClick={downloadStatement}
+                    sx={{ color: 'text.secondary', borderColor: 'rgba(255,255,255,0.1)' }}
+                    variant="outlined"
+                >
+                    Statement
+                </Button>
             </Box>
             
             <List sx={{ width: '100%', bgcolor: 'transparent' }}>
