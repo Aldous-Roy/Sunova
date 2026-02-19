@@ -8,6 +8,7 @@ const GlassCard = ({ children, sx = {}, delay = 0, ...props }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: delay }}
+      style={{ height: sx.height || 'auto', width: sx.width || 'auto' }}
     >
       <Card
         sx={{

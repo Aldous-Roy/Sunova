@@ -1,88 +1,131 @@
 import React from 'react';
-import { Box, Typography, Button, Grid, List, ListItem, ListItemText, ListItemAvatar, Avatar, Divider } from '@mui/material';
+import { Box, Typography, Button, Grid, Avatar, Chip, IconButton } from '@mui/material';
 import GlassCard from '../components/GlassCard';
+import TransactionHistory from '../components/TransactionHistory';
 import useEnergyStore from '../store/energyStore';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
-const WalletPage = () => {
-    const { wallet, user } = useEnergyStore();
-    
-    // Dummy Data
-    const transactions = [
-        { id: 1, type: 'credit', amount: 450, desc: 'P2P Energy Sale (Host #442)', date: 'Today, 2:30 PM' },
-        { id: 2, type: 'debit', amount: 120, desc: 'EV Charging Session', date: 'Yesterday, 6:15 PM' },
-        { id: 3, type: 'credit', amount: 1200, desc: 'Grid Feed-in Rebate', date: 'Oct 24, 2024' },
+const EarningsChart = () => {
+    const data = [
+        { day: 'Mon', amount: 120 },
+        { day: 'Tue', amount: 150 },
+        { day: 'Wed', amount: 180 },
+        { day: 'Thu', amount: 140 },
+        { day: 'Fri', amount: 210 },
+        { day: 'Sat', amount: 250 },
+        { day: 'Sun', amount: 310 },
     ];
 
     return (
-        <Box>
-            <Typography variant="h4" fontWeight="bold" sx={{ mb: 3 }}>My Wallet</Typography>
+        <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={data}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                <XAxis dataKey="day" stroke="rgba(255,255,255,0.5)" style={{ fontSize: '0.8rem' }} />
+                <YAxis stroke="rgba(255,255,255,0.5)" style={{ fontSize: '0.8rem' }} />
+                <Tooltip 
+                    cursor={{ fill: 'rgba(255,255,255,0.05)' }}
+                    contentStyle={{ background: 'rgba(26, 34, 53, 0.9)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8 }}
+                />
+                <Bar dataKey="amount" fill="#3B82F6" radius={[4, 4, 0, 0]} barSize={30} />
+            </BarChart>
+        </ResponsiveContainer>
+    );
+};
+
+const WalletPage = () => {
+    const { wallet } = useEnergyStore();
+    
+    // Dummy Data
+    const transactions = [
+        { id: 1, type: 'credit', amount: 450.50, desc: 'Energy Sale: Host #442', date: 'Today, 2:30 PM', status: 'Completed' },
+        { id: 2, type: 'debit', amount: 120.00, desc: 'EV Charging Session', date: 'Yesterday, 6:15 PM', status: 'Completed' },
+        { id: 3, type: 'credit', amount: 1200.00, desc: 'Grid Feed-in Rebate', date: 'Oct 24, 2024', status: 'Pending' },
+        { id: 4, type: 'credit', amount: 85.20, desc: 'Peer-to-Peer Transfer', date: 'Oct 22, 2024', status: 'Completed' },
+    ];
+
+    return (
+        <Box sx={{ width: '100%', pb: 4 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+                <Box>
+                    <Typography variant="h4" fontWeight="bold">My Earnings</Typography>
+                    <Typography variant="body2" color="text.secondary">Manage your wallet and track revenue</Typography>
+                </Box>
+                <Button variant="outlined" startIcon={<TrendingUpIcon />}>Download Report</Button>
+            </Box>
             
-            <Grid container spacing={4}>
-                {/* Balance Card */}
-                <Grid item xs={12} md={6}>
-                    <GlassCard sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                            <Avatar sx={{ bgcolor: 'rgba(34, 197, 94, 0.2)', color: '#22C55E', mr: 2 }}>
-                                <AccountBalanceWalletIcon />
-                            </Avatar>
-                            <Typography variant="h6" color="text.secondary">Current Balance</Typography>
-                        </Box>
-                        <Typography variant="h2" fontWeight="bold" sx={{ mb: 1 }}>
-                            ₹{wallet.toFixed(2)}
-                        </Typography>
-                        <Typography variant="body2" color="success.main" sx={{ mb: 4 }}>
-                            +2.4% vs last week
-                        </Typography>
-                        <Box sx={{ display: 'flex', gap: 2 }}>
-                            <Button variant="contained" color="primary" fullWidth sx={{ borderRadius: 3 }}>
-                                Add Funds
-                            </Button>
-                            <Button variant="outlined" color="inherit" fullWidth sx={{ borderRadius: 3 }}>
-                                Withdraw
-                            </Button>
-                        </Box>
-                    </GlassCard>
+            <Grid container spacing={3}>
+                {/* Left Column: Balance & Chart */}
+                <Grid size={{ xs: 12, md: 7 }}>
+                    <Grid container spacing={3}>
+                        {/* Balance Card */}
+                        <Grid size={{ xs: 12 }}>
+                            <GlassCard sx={{ background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%)', border: '1px solid rgba(59, 130, 246, 0.2)' }}>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 3 }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Avatar sx={{ bgcolor: 'rgba(59, 130, 246, 0.2)', color: '#3B82F6', mr: 2, height: 48, width: 48 }}>
+                                            <AccountBalanceWalletIcon />
+                                        </Avatar>
+                                        <Box>
+                                            <Typography variant="body2" color="text.secondary">Total Balance</Typography>
+                                            <Typography variant="h3" fontWeight="bold" sx={{ color: 'white' }}>
+                                                ₹{wallet.toFixed(2)}
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+                                    <Chip label="+12.5% this month" color="success" size="small" variant="outlined" />
+                                </Box>
+                                
+                                <Box sx={{ display: 'flex', gap: 2 }}>
+                                    <Button variant="contained" color="primary" size="large" sx={{ borderRadius: 3, px: 4, flexGrow: 1 }}>
+                                        Withdraw Funds
+                                    </Button>
+                                    <Button variant="outlined" color="primary" size="large" sx={{ borderRadius: 3, px: 4, flexGrow: 1 }}>
+                                        Add Money
+                                    </Button>
+                                </Box>
+                            </GlassCard>
+                        </Grid>
+
+                        {/* Earnings Chart */}
+                        <Grid size={{ xs: 12 }}>
+                            <GlassCard>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                                    <Typography variant="h6" fontWeight="bold">Revenue Trends</Typography>
+                                    <Box>
+                                        <Chip label="Weekly" color="primary" size="small" />
+                                    </Box>
+                                </Box>
+                                <EarningsChart />
+                            </GlassCard>
+                        </Grid>
+                    </Grid>
                 </Grid>
 
-                {/* Transaction History */}
-                <Grid item xs={12} md={6}>
-                    <GlassCard>
-                         <Typography variant="h6" gutterBottom>Recent Transactions</Typography>
-                         <List>
-                            {transactions.map((tx, index) => (
-                                <Box key={tx.id}>
-                                    <ListItem alignItems="flex-start" sx={{ px: 0 }}>
-                                        <ListItemAvatar>
-                                            <Avatar sx={{ 
-                                                bgcolor: tx.type === 'credit' ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)',
-                                                color: tx.type === 'credit' ? '#22C55E' : '#EF4444'
-                                            }}>
-                                                {tx.type === 'credit' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
-                                            </Avatar>
-                                        </ListItemAvatar>
-                                        <ListItemText
-                                            primary={tx.desc}
-                                            secondary={tx.date}
-                                            primaryTypographyProps={{ fontWeight: 500 }}
-                                            secondaryTypographyProps={{ color: 'text.secondary' }}
-                                        />
-                                        <Typography 
-                                            variant="body1" 
-                                            fontWeight="bold"
-                                            color={tx.type === 'credit' ? 'success.main' : 'error.main'}
-                                        >
-                                            {tx.type === 'credit' ? '+' : '-'}₹{tx.amount}
-                                        </Typography>
-                                    </ListItem>
-                                    {index < transactions.length - 1 && <Divider component="li" sx={{ borderColor: 'rgba(255,255,255,0.05)' }} />}
-                                </Box>
-                            ))}
-                         </List>
-                         <Button fullWidth sx={{ mt: 2 }}>View All Transactions</Button>
-                    </GlassCard>
+                {/* Right Column: Transactions & Quick Stats */}
+                <Grid size={{ xs: 12, md: 5 }}>
+                    <Grid container spacing={3} direction="column">
+                        {/* Quick Stats */}
+                        <Grid size={{ xs: 12 }}>
+                            <Box sx={{ display: 'flex', gap: 2 }}>
+                                <GlassCard sx={{ flex: 1, p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                                    <Typography variant="body2" color="text.secondary">Pending</Typography>
+                                    <Typography variant="h5" fontWeight="bold">₹1,250</Typography>
+                                </GlassCard>
+                                <GlassCard sx={{ flex: 1, p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                                    <Typography variant="body2" color="text.secondary">Lifetime</Typography>
+                                    <Typography variant="h5" fontWeight="bold">₹45.2k</Typography>
+                                </GlassCard>
+                            </Box>
+                        </Grid>
+
+                        {/* Transactions List */}
+                        <Grid size={{ xs: 12, flexGrow: 1 }}>
+                            <TransactionHistory transactions={transactions} />
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
         </Box>

@@ -88,18 +88,20 @@ const Layout = () => {
                             size="small"
                             sx={{ borderColor: 'rgba(255,255,255,0.1)', color: 'text.secondary' }}
                         />
-                        <motion.div key={wallet} initial={{ scale: 1.2 }} animate={{ scale: 1 }}>
-                            <Chip 
-                                label={`₹${wallet.toFixed(0)}`} 
-                                variant="filled"
-                                sx={{ 
-                                    fontWeight: 'bold', 
-                                    background: 'linear-gradient(90deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.1) 100%)', 
-                                    color: '#4ADE80',
-                                    border: '1px solid rgba(34, 197, 94, 0.2)'
-                                }}
-                            />
-                        </motion.div>
+                        {user.role !== 'ev' && (
+                            <motion.div key={wallet} initial={{ scale: 1.2 }} animate={{ scale: 1 }}>
+                                <Chip 
+                                    label={`₹${wallet.toFixed(0)}`} 
+                                    variant="filled"
+                                    sx={{ 
+                                        fontWeight: 'bold', 
+                                        background: 'linear-gradient(90deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.1) 100%)', 
+                                        color: '#4ADE80',
+                                        border: '1px solid rgba(34, 197, 94, 0.2)'
+                                    }}
+                                />
+                            </motion.div>
+                        )}
                     </Box>
                 </Box>
 

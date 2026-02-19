@@ -44,7 +44,6 @@ const Sidebar = ({ onClose }) => {
     } else if (user.role === 'ev') {
         menuItems = [
             { label: 'Find Chargers', icon: <MapIcon />, path: '/ev' },
-            { label: 'My Wallet', icon: <AccountBalanceWalletIcon />, path: '/ev/wallet' },
             { label: 'History', icon: <HistoryIcon />, path: '/ev/history' },
         ];
     } else if (user.role === 'admin') {

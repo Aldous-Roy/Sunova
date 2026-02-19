@@ -88,7 +88,6 @@ const EVDashboard = () => {
         <Box sx={{ height: { xs: 'auto', md: 'calc(100vh - 100px)' }, display: 'flex', flexDirection: 'column' }}>
             <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', md: 'center' }, mb: 2, gap: 1 }}>
                 <Typography variant="h4" fontWeight="bold">Find Charge Points</Typography>
-                <Chip label={`Wallet Balance: ₹${wallet.toFixed(0)}`} color="default" variant="outlined" />
             </Box>
 
             <Grid container spacing={3} sx={{ flexGrow: 1 }} alignItems="stretch">

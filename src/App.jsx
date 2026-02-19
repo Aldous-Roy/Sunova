@@ -46,7 +46,6 @@ function App() {
             
             {/* EV Routes */}
             <Route path="ev" element={<ProtectedRoute><EVDashboard /></ProtectedRoute>} />
-            <Route path="ev/wallet" element={<ProtectedRoute><WalletPage /></ProtectedRoute>} />
             <Route path="ev/history" element={<ProtectedRoute><HistoryPage /></ProtectedRoute>} />
             
             {/* Admin Routes */}
