@@ -11,6 +11,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import WalletPage from './pages/WalletPage';
 import HistoryPage from './pages/HistoryPage';
 import SettingsPage from './pages/SettingsPage';
+import CompliancePage from './pages/CompliancePage';
 import useEnergyStore from './store/energyStore';
 
 const ProtectedRoute = ({ children }) => {
@@ -50,6 +51,7 @@ function App() {
             
             {/* Admin Routes */}
             <Route path="admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+            <Route path="admin/compliance" element={<ProtectedRoute><CompliancePage /></ProtectedRoute>} />
             <Route path="admin/users" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
           </Route>
         </Routes>

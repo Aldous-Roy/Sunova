@@ -49,7 +49,7 @@ const Sidebar = ({ onClose }) => {
     } else if (user.role === 'admin') {
         menuItems = [
             { label: 'Network Overview', icon: <DashboardIcon />, path: '/admin' },
-            { label: 'Compliance Audit', icon: <BoltIcon />, path: '/admin' },
+            { label: 'Compliance Audit', icon: <BoltIcon />, path: '/admin/compliance' },
             { label: 'User Management', icon: <SettingsIcon />, path: '/admin/users' },
         ];
     }

@@ -27,13 +27,12 @@ const hostIcon = new L.Icon({
     shadowSize: [41, 41]
 });
 
-const carIcon = new L.Icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
+const carIcon = L.divIcon({
+    className: 'custom-car-icon',
+    html: '<div style="font-size: 40px; filter: drop-shadow(0 0 4px rgba(0,0,0,0.5));">🚗</div>',
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [0, -20]
 });
 
 const MapComponent = ({ hosts, userLocation, onHostClick }) => {

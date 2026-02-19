@@ -91,8 +91,8 @@ const EVDashboard = () => {
             </Box>
 
             <Grid container spacing={3} sx={{ flexGrow: 1 }} alignItems="stretch">
-                {/* Left Side: Map - Full width on Mobile, fixed height */}
-                <Grid size={{ xs: 12, md: 7 }} sx={{ height: { xs: '50vh', md: '100%' }, minHeight: '400px' }}>
+                {/* Map - Full Screen */}
+                <Grid size={{ xs: 12 }} sx={{ height: '100%', minHeight: '500px' }}>
                     <GlassCard sx={{ height: '100%', width: '100%', p: 0, overflow: 'hidden' }} delay={0}>
                          <MapComponent 
                             hosts={hosts} 
@@ -100,34 +100,6 @@ const EVDashboard = () => {
                             onHostClick={handleOpen}
                          />
                     </GlassCard>
-                </Grid>
-
-                {/* Right Side: List & Stats - Scrollable column on Desktop, stacked on Mobile */}
-                <Grid size={{ xs: 12, md: 5 }} sx={{ height: { xs: 'auto', md: '100%' }, overflowY: { xs: 'visible', md: 'auto' } }}>
-                    {/* Savings Banner */}
-                    <GlassCard sx={{ mb: 3, background: 'linear-gradient(90deg, rgba(59,130,246,0.2) 0%, rgba(34,197,94,0.2) 100%)' }} delay={0.1}>
-                        <Grid container alignItems="center">
-                            <Grid size={{ xs: 8 }}>
-                                <Typography variant="h6" gutterBottom>Save 30%</Typography>
-                                <Typography variant="caption" color="text.secondary" display="block">
-                                    Pay ₹{PRICING.VOLTNEST_TARIFF}/unit (vs ₹{PRICING.PUBLIC_GRID_TARIFF})
-                                </Typography>
-                            </Grid>
-                            <Grid size={{ xs: 4 }} sx={{ textAlign: 'right' }}>
-                                <Typography variant="h4" color="success.main" fontWeight="bold">₹{savings.savings}</Typography>
-                                <Typography variant="caption">/ 100kWh</Typography>
-                            </Grid>
-                        </Grid>
-                    </GlassCard>
-
-                    {/* Available Hosts - Responsive Grid for Cards */}
-                    <Grid container spacing={2}>
-                        {hosts.map((host, index) => (
-                            <Grid size={{ xs: 12, sm: 6, md: 12 }} key={host.id}>
-                                <HostCard host={host} onBook={handleOpen} delay={0.2 + (index * 0.1)} />
-                            </Grid>
-                        ))}
-                    </Grid>
                 </Grid>
             </Grid>
 

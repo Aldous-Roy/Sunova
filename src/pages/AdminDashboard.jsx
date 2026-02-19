@@ -13,13 +13,6 @@ const AdminDashboard = () => {
     const totalSolar = historicalData.reduce((acc, curr) => acc + curr.solar, 0);
     const totalGridExport = historicalData.reduce((acc, curr) => acc + curr.gridExport, 0);
 
-    const mockAuditLog = [
-        { id: 1, time: '10:15 AM', event: 'Peer-to-Peer Transaction Settled', status: 'success', details: 'Transferred 3.2kWh to EV-8821' },
-        { id: 2, time: '10:12 AM', event: 'Grid Export Limit Check', status: 'success', details: 'Export within regulatory cap (5kW)' },
-        { id: 3, time: '09:45 AM', event: 'Voltage Stability Warning', status: 'warning', details: 'Micro-fluctuation detected in Sector 4' },
-        { id: 4, time: '09:30 AM', event: 'New Host KYC Approved', status: 'success', details: 'Host ID: #HST-9921' },
-    ];
-
     return (
         <Box>
             <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', sm: 'center' }, mb: 4, gap: 2 }}>
@@ -57,43 +50,6 @@ const AdminDashboard = () => {
                     </GlassCard>
                 </Grid>
             </Grid>
-
-            {/* Compliance Audit Log */}
-            <GlassCard delay={0.4}>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                    <Typography variant="h6" sx={{ flexGrow: 1 }}>Real-time Audit Log</Typography>
-                    <RefreshIcon sx={{ opacity: 0.5 }} />
-                </Box>
-                <TableContainer component={Box} sx={{ maxHeight: 400 }}>
-                    <Table stickyHeader>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell sx={{ color: 'text.secondary', background: '#1A2235' }}>Time</TableCell>
-                                <TableCell sx={{ color: 'text.secondary', background: '#1A2235' }}>Event Type</TableCell>
-                                <TableCell sx={{ color: 'text.secondary', background: '#1A2235' }}>Status</TableCell>
-                                <TableCell sx={{ color: 'text.secondary', background: '#1A2235' }}>Details</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {mockAuditLog.map((log) => (
-                                <TableRow key={log.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                    <TableCell sx={{ whiteSpace: 'nowrap' }}>{log.time}</TableCell>
-                                    <TableCell>{log.event}</TableCell>
-                                    <TableCell>
-                                        <Chip 
-                                            label={log.status.toUpperCase()} 
-                                            size="small" 
-                                            color={log.status === 'success' ? 'success' : 'warning'} 
-                                            variant="outlined"
-                                        />
-                                    </TableCell>
-                                    <TableCell sx={{ opacity: 0.7, minWidth: 200 }}>{log.details}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </GlassCard>
         </Box>
     );
 };
