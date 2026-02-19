@@ -21,12 +21,20 @@ const LoginPage = () => {
             return;
         }
         
-        const role = tab === 0 ? 'host' : (tab === 1 ? 'ev' : 'admin');
+        const roles = ['host', 'ev', 'admin'];
+        const role = roles[tab];
+        
+        console.log("Attempting login:", { email, role });
+        
         login(email, password, role);
         
-        if (role === 'host') navigate('/host');
-        else if (role === 'ev') navigate('/ev');
-        else navigate('/admin');
+        // Navigation based on role
+        switch(role) {
+            case 'host': navigate('/host'); break;
+            case 'ev': navigate('/ev'); break;
+            case 'admin': navigate('/admin'); break;
+            default: navigate('/');
+        }
     };
 
     const handleTabChange = (event, newValue) => {

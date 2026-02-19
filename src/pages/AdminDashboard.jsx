@@ -1,10 +1,9 @@
 import React from 'react';
-import { Grid, Typography, Box, Table, TableBody, TableCell, TableHead, TableRow, Chip, TableContainer, Paper } from '@mui/material';
+import { Grid, Typography, Box, Chip } from '@mui/material';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend } from 'recharts';
 import GlassCard from '../components/GlassCard';
 import useEnergyStore from '../store/energyStore';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
-import WarningIcon from '@mui/icons-material/Warning';
-import RefreshIcon from '@mui/icons-material/Refresh';
 
 const AdminDashboard = () => {
     const { historicalData } = useEnergyStore();
@@ -47,6 +46,59 @@ const AdminDashboard = () => {
                          <Typography color="text.secondary">Active P2P Nodes</Typography>
                          <Typography variant="h3" fontWeight="bold">24 / 30</Typography>
                          <Typography variant="caption" color="primary"> 80% Pilot Participation</Typography>
+                    </GlassCard>
+                </Grid>
+            </Grid>
+
+            {/* Network Graphs */}
+            <Grid container spacing={3}>
+                {/* Main Flow Chart */}
+                <Grid size={{ xs: 12, md: 8 }}>
+                    <GlassCard delay={0.4} sx={{ height: '400px', display: 'flex', flexDirection: 'column' }}>
+                        <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>Network Energy Flow</Typography>
+                        <ResponsiveContainer width="100%" height="100%">
+                            <AreaChart data={historicalData}>
+                                <defs>
+                                    <linearGradient id="colorSolar" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#FBBF24" stopOpacity={0.8}/>
+                                        <stop offset="95%" stopColor="#FBBF24" stopOpacity={0}/>
+                                    </linearGradient>
+                                    <linearGradient id="colorGrid" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.8}/>
+                                        <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
+                                    </linearGradient>
+                                </defs>
+                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                                <XAxis dataKey="time" stroke="rgba(255,255,255,0.5)" tick={{ fontSize: 12 }} />
+                                <YAxis stroke="rgba(255,255,255,0.5)" tick={{ fontSize: 12 }} />
+                                <Tooltip 
+                                    contentStyle={{ backgroundColor: '#1A2235', borderColor: 'rgba(255,255,255,0.1)', borderRadius: '10px' }}
+                                    itemStyle={{ color: '#fff' }}
+                                />
+                                <Legend />
+                                <Area type="monotone" dataKey="solar" name="Solar Gen (kW)" stroke="#FBBF24" fillOpacity={1} fill="url(#colorSolar)" />
+                                <Area type="monotone" dataKey="gridExport" name="Grid Export (kW)" stroke="#3B82F6" fillOpacity={1} fill="url(#colorGrid)" />
+                            </AreaChart>
+                        </ResponsiveContainer>
+                    </GlassCard>
+                </Grid>
+
+                {/* Battery/Load Chart */}
+                <Grid size={{ xs: 12, md: 4 }}>
+                    <GlassCard delay={0.5} sx={{ height: '400px', display: 'flex', flexDirection: 'column' }}>
+                        <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>Storage & Demand</Typography>
+                        <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={historicalData}>
+                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" vertical={false} />
+                                <XAxis dataKey="time" stroke="rgba(255,255,255,0.5)" tick={{ fontSize: 10 }} interval={4} />
+                                <Tooltip 
+                                    cursor={{fill: 'rgba(255,255,255,0.05)'}}
+                                    contentStyle={{ backgroundColor: '#1A2235', borderColor: 'rgba(255,255,255,0.1)', borderRadius: '10px' }}
+                                />
+                                <Bar dataKey="batteryLevel" name="Avg Battery %" fill="#10B981" radius={[4, 4, 0, 0]} />
+                                <Bar dataKey="consumption" name="Load (kW)" fill="#EF4444" radius={[4, 4, 0, 0]} />
+                            </BarChart>
+                        </ResponsiveContainer>
                     </GlassCard>
                 </Grid>
             </Grid>
