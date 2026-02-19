@@ -58,7 +58,7 @@ const Layout = () => {
             </Drawer>
 
             {/* Main Content Area */}
-            <Box component="main" sx={{ flexGrow: 1, p: 3, width: '100%', minWidth: 0, height: '100vh', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+            <Box component="main" sx={{ flexGrow: 1, p: 3, minWidth: 0, height: '100vh', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
                 
                 {/* Mobile Header / Top Helper Bar */}
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, minHeight: '40px' }}>
@@ -109,7 +109,7 @@ const Layout = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}
+                    style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', width: '100%' }}
                 >
                     <Outlet />
                 </motion.div>

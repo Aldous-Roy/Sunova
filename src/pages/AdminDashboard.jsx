@@ -35,21 +35,21 @@ const AdminDashboard = () => {
 
             {/* Aggregates */}
             <Grid container spacing={3} sx={{ mb: 4 }}>
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                     <GlassCard delay={0.1}>
                         <Typography color="text.secondary">Total Pilot Generation</Typography>
                         <Typography variant="h3" fontWeight="bold">{(totalSolar * 10).toFixed(1)} kWh</Typography>
                         <Typography variant="caption" color="success.main"> +12% vs Projection</Typography>
                     </GlassCard>
                 </Grid>
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                     <GlassCard delay={0.2}>
                          <Typography color="text.secondary">Grid Export Volume</Typography>
                          <Typography variant="h3" fontWeight="bold">{(totalGridExport * 10).toFixed(1)} kWh</Typography>
                          <Typography variant="caption" color="text.secondary"> 20% capped by local transformer</Typography>
                     </GlassCard>
                 </Grid>
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                     <GlassCard delay={0.3}>
                          <Typography color="text.secondary">Active P2P Nodes</Typography>
                          <Typography variant="h3" fontWeight="bold">24 / 30</Typography>
