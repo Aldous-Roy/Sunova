@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
     Grid, Typography, Box, Button, Dialog, DialogTitle, 
-    DialogContent, DialogActions, Chip, LinearProgress 
+    DialogContent, DialogActions, Chip, CircularProgress 
 } from '@mui/material';
 import GlassCard from '../components/GlassCard';
 import MapComponent from '../components/MapComponent';
@@ -44,6 +44,8 @@ const EVDashboard = () => {
     const [selectedHost, setSelectedHost] = useState(null);
     const [open, setOpen] = useState(false);
     const [bookingSuccess, setBookingSuccess] = useState(false);
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [processingStatus, setProcessingStatus] = useState('');
 
     // Mock Location Data (Chennai Center)
     const userLocation = [13.0827, 80.2707];
@@ -67,7 +69,18 @@ const EVDashboard = () => {
         setSelectedHost(null);
     };
 
-    const handleConfirmBooking = () => {
+    const handleConfirmBooking = async () => {
+        setIsProcessing(true);
+        
+        setProcessingStatus("Connecting to VoltNest Network...");
+        await new Promise(r => setTimeout(r, 1500));
+        
+        setProcessingStatus("Verifying Wallet Balance...");
+        await new Promise(r => setTimeout(r, 1500));
+
+        setProcessingStatus("Executing Smart Contract (50 INR)...");
+        await new Promise(r => setTimeout(r, 2000));
+
         // Simulate booking logic
         addBooking({
             id: Date.now(),
@@ -77,9 +90,11 @@ const EVDashboard = () => {
             status: 'active',
             price: 50 // Fixed dummy price for demo
         });
+        
+        setIsProcessing(false);
         setBookingSuccess(true);
         // Close after delay
-        setTimeout(handleClose, 2000);
+        setTimeout(handleClose, 2500);
     };
 
     const savings = calculateSavings(100); 
@@ -124,6 +139,14 @@ const EVDashboard = () => {
                          <Typography variant="h5">Booking Confirmed!</Typography>
                          <Typography color="text.secondary">Redirecting you to navigation...</Typography>
                     </Box>
+                ) : isProcessing ? (
+                    <Box sx={{ p: 6, textAlign: 'center' }}>
+                        <CircularProgress size={60} thickness={4} sx={{ mb: 3, color: '#3B82F6' }} />
+                        <Typography variant="h6" fontWeight="bold" gutterBottom>Processing Transaction</Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{ fontFamily: 'monospace' }}>
+                            {processingStatus}
+                        </Typography>
+                    </Box>
                 ) : (
                     <>
                         <DialogTitle sx={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
@@ -148,11 +171,12 @@ const EVDashboard = () => {
                             )}
                         </DialogContent>
                         <DialogActions sx={{ p: 3 }}>
-                            <Button onClick={handleClose} color="inherit">Cancel</Button>
+                            <Button onClick={handleClose} color="inherit" disabled={isProcessing}>Cancel</Button>
                             <Button 
                                 variant="contained" 
                                 onClick={handleConfirmBooking}
                                 sx={{ px: 4 }}
+                                disabled={isProcessing}
                             >
                                 Confirm & Pay
                             </Button>
