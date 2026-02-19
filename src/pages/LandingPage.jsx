@@ -117,7 +117,7 @@ const LandingPage = () => {
                 </Box>
 
                 {/* Value Proposition Stats */}
-                <Box sx={{ mb: 20 }}>
+                <Box sx={{ mb: 10 }}>
                     <GlassCard sx={{ p: { xs: 4, md: 6 }, display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'space-around', alignItems: 'center', gap: 4, background: 'rgba(26, 34, 53, 0.4)' }}>
                         {[
                             { value: '40%', label: 'Surplus Redirected', sub: 'From wasted to wealth', color: '#3B82F6' },
@@ -142,7 +142,9 @@ const LandingPage = () => {
                 </Box>
                 
                 {/* Feature 1: Generate */}
-                <Box sx={{ mb: 20 }}>
+                <Box sx={{ mb: 12, position: 'relative' }}>
+                    {/* Background Glow */}
+                    <Box sx={{ position: 'absolute', top: '50%', left: '0', transform: 'translateY(-50%)', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, rgba(0,0,0,0) 70%)', zIndex: -1, pointerEvents: 'none' }} />
                     <Grid container spacing={8} alignItems="center">
                         <Grid item xs={12} md={6}>
                             <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
@@ -175,8 +177,15 @@ const LandingPage = () => {
                     </Grid>
                 </Box>
 
+                {/* Connecting Line (Desktop only) */}
+                <Box sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'center', mb: 4 }}>
+                    <Box sx={{ width: '2px', height: '100px', background: 'linear-gradient(to bottom, rgba(245, 158, 11, 0.5), rgba(59, 130, 246, 0.5))' }} />
+                </Box>
+
                 {/* Feature 2: Connect */}
-                <Box sx={{ mb: 20 }}>
+                <Box sx={{ mb: 12, position: 'relative' }}>
+                     {/* Background Glow */}
+                     <Box sx={{ position: 'absolute', top: '50%', right: '0', transform: 'translateY(-50%)', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(0,0,0,0) 70%)', zIndex: -1, pointerEvents: 'none' }} />
                     <Grid container spacing={8} alignItems="center" direction={{ xs: 'column-reverse', md: 'row' }}>
                         <Grid item xs={12} md={6}>
                             <GlassCard sx={{ p: 0, overflow: 'hidden', transform: 'rotate(-2deg)', transition: 'transform 0.3s ease', '&:hover': { transform: 'rotate(0deg)' } }}>
@@ -208,8 +217,15 @@ const LandingPage = () => {
                     </Grid>
                 </Box>
 
+                {/* Connecting Line (Desktop only) */}
+                <Box sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'center', mb: 4 }}>
+                    <Box sx={{ width: '2px', height: '100px', background: 'linear-gradient(to bottom, rgba(59, 130, 246, 0.5), rgba(34, 197, 94, 0.5))' }} />
+                </Box>
+
                 {/* Feature 3: Transact */}
-                <Box sx={{ mb: 20 }}>
+                <Box sx={{ mb: 16, position: 'relative' }}>
+                     {/* Background Glow */}
+                     <Box sx={{ position: 'absolute', top: '50%', left: '0', transform: 'translateY(-50%)', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(34, 197, 94, 0.08) 0%, rgba(0,0,0,0) 70%)', zIndex: -1, pointerEvents: 'none' }} />
                      <Grid container spacing={8} alignItems="center">
                         <Grid item xs={12} md={6}>
                             <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
