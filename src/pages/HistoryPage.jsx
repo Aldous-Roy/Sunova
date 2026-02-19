@@ -34,9 +34,9 @@ const HistoryPage = () => {
                         <TableBody>
                             {displayBookings.map((booking) => (
                                 <TableRow key={booking.id} hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                    <TableCell>{booking.date || 'Just now'}</TableCell>
-                                    <TableCell>{booking.hostName || booking.user || 'Unknown'}</TableCell>
-                                    <TableCell>₹{booking.price || booking.amount}</TableCell>
+                                    <TableCell>{booking.date || new Date().toLocaleString()}</TableCell>
+                                    <TableCell>{booking.hostName || booking.name || booking.stationName || 'Unknown Station'}</TableCell>
+                                    <TableCell>₹{(booking.price || booking.amount || 0).toFixed(2)}</TableCell>
                                     <TableCell>
                                         <Chip 
                                             label={(booking.status || 'completed').toUpperCase()} 

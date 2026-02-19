@@ -7,6 +7,8 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 const EarningsChart = () => {
     const data = [
@@ -46,6 +48,29 @@ const WalletPage = () => {
         { id: 4, type: 'credit', amount: 85.20, desc: 'Peer-to-Peer Transfer', date: 'Oct 22, 2024', status: 'Completed' },
     ];
 
+    const downloadReport = () => {
+        const doc = new jsPDF();
+        doc.text("Earnings Report", 14, 20);
+        doc.text(`Total Balance: Rs ${wallet.toFixed(2)}`, 14, 30);
+        
+        const tableColumn = ["Date", "Description", "Type", "Amount", "Status"];
+        const tableRows = transactions.map(tx => [
+            tx.date, 
+            tx.desc, 
+            tx.type.toUpperCase(), 
+            `Rs ${tx.amount.toFixed(2)}`, 
+            tx.status
+        ]);
+
+        autoTable(doc, {
+            startY: 40,
+            head: [tableColumn],
+            body: tableRows,
+        });
+
+        doc.save("earnings_report.pdf");
+    };
+
     return (
         <Box sx={{ width: '100%', pb: 4 }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
@@ -53,7 +78,13 @@ const WalletPage = () => {
                     <Typography variant="h4" fontWeight="bold">My Earnings</Typography>
                     <Typography variant="body2" color="text.secondary">Manage your wallet and track revenue</Typography>
                 </Box>
-                <Button variant="outlined" startIcon={<TrendingUpIcon />}>Download Report</Button>
+                <Button 
+                    variant="outlined" 
+                    startIcon={<TrendingUpIcon />} 
+                    onClick={downloadReport}
+                >
+                    Download Report
+                </Button>
             </Box>
             
             <Grid container spacing={3}>
