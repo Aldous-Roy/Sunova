@@ -1,107 +1,121 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography, Button, Container, Box, Chip, Avatar } from '@mui/material';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import BoltIcon from '@mui/icons-material/Bolt';
+import React, { useState } from 'react';
+import { 
+  Box, IconButton, Drawer, Typography, Chip, useMediaQuery
+} from '@mui/material';
+import { Outlet, useLocation } from 'react-router-dom';
+import MenuIcon from '@mui/icons-material/Menu';
 import useEnergyStore from '../store/energyStore';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '@mui/material/styles';
+import Sidebar from './Sidebar';
 
 const Layout = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { role, setRole, wallet, hour, minute } = useEnergyStore();
+    const location = useLocation();
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const { user, wallet, hour, minute } = useEnergyStore();
+    const [mobileOpen, setMobileOpen] = useState(false);
+  
+    const handleDrawerToggle = () => {
+      setMobileOpen(!mobileOpen);
+    };
 
-  const handleRoleChange = (newRole) => {
-    setRole(newRole);
-    if (newRole === 'host') navigate('/host');
-    else if (newRole === 'ev') navigate('/ev');
-    else if (newRole === 'admin') navigate('/admin');
-    else navigate('/');
-  };
+    // If user is NOT logged in (Landing Page), show a simple Header (or nothing if you prefer landing page to handle its own layout)
+    // For this refactor, we'll assume Layout wraps everything. If no user, we render children roughly as before but without Key Nav elements
+    if (!user) {
+        return (
+             <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+                <Outlet />
+             </Box>
+        );
+    }
+    
+    // Sidebar width
+    const drawerWidth = 260;
 
-  const navItems = [
-    { label: 'Host Mode', value: 'host' },
-    { label: 'EV Driver', value: 'ev' },
-    { label: 'Compliance', value: 'admin' },
-  ];
-
-  return (
-    <>
-      <AppBar 
-        position="sticky" 
-        elevation={0}
-        sx={{ 
-          backgroundColor: 'rgba(11, 15, 26, 0.8)', 
-          backdropFilter: 'blur(12px)',
-          borderBottom: '1px solid rgba(255,255,255,0.05)'
-        }}
-      >
-        <Container maxWidth="xl">
-          <Toolbar disableGutters sx={{ justifyContent: 'space-between', height: 80 }}>
-            {/* Logo */}
-            <motion.div 
-              style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-              onClick={() => navigate('/')}
-              whileHover={{ scale: 1.05 }}
+    return (
+        <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: '#0B0F1A' }}>
+            {/* Desktop Sidebar */}
+            <Box
+                component="nav"
+                sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 }, height: '100vh', display: { xs: 'none', md: 'block' } }}
             >
-              <Avatar sx={{ bgcolor: 'secondary.main', mr: 2 }}>
-                <BoltIcon />
-              </Avatar>
-              <Typography variant="h5" component="div" sx={{ fontWeight: 700, letterSpacing: '0.05em' }}>
-                VOLT<span style={{ color: '#3B82F6' }}>NEST</span>
-              </Typography>
-            </motion.div>
+                <Sidebar />
+            </Box>
 
-            {/* Role Switcher */}
-            <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2, alignItems: 'center' }}>
-              {navItems.map((item) => (
-                <Button
-                  key={item.value}
-                  variant={role === item.value ? "contained" : "text"}
-                  color={role === item.value ? "primary" : "inherit"}
-                  onClick={() => handleRoleChange(item.value)}
-                  sx={{ 
-                    borderRadius: '24px',
-                    px: 3,
-                    opacity: role === item.value ? 1 : 0.6 
-                  }}
+            {/* Mobile Drawer */}
+            <Drawer
+                variant="temporary"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+                ModalProps={{ keepMounted: true }}
+                sx={{
+                    display: { xs: 'block', md: 'none' },
+                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                }}
+            >
+                <Sidebar onClose={handleDrawerToggle} />
+            </Drawer>
+
+            {/* Main Content Area */}
+            <Box component="main" sx={{ flexGrow: 1, p: 3, width: '100%', minWidth: 0, height: '100vh', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+                
+                {/* Mobile Header / Top Helper Bar */}
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, minHeight: '40px' }}>
+                    {/* Mobile Toggle */}
+                     <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={handleDrawerToggle}
+                        sx={{ mr: 2, display: { md: 'none' } }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+
+                    {/* Left: Optional Breadcrumb or Welcome */}
+                    <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                        <Typography variant="body2" color="text.secondary">
+                            {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                        </Typography>
+                    </Box>
+
+                    {/* Right: Global Stats (Time / Wallet) */}
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, ml: 'auto' }}>
+                        <Chip 
+                            label={`${hour}:${minute.toString().padStart(2, '0')}`} 
+                            variant="outlined" 
+                            size="small"
+                            sx={{ borderColor: 'rgba(255,255,255,0.1)', color: 'text.secondary' }}
+                        />
+                        <motion.div key={wallet} initial={{ scale: 1.2 }} animate={{ scale: 1 }}>
+                            <Chip 
+                                label={`₹${wallet.toFixed(0)}`} 
+                                variant="filled"
+                                sx={{ 
+                                    fontWeight: 'bold', 
+                                    background: 'linear-gradient(90deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.1) 100%)', 
+                                    color: '#4ADE80',
+                                    border: '1px solid rgba(34, 197, 94, 0.2)'
+                                }}
+                            />
+                        </motion.div>
+                    </Box>
+                </Box>
+
+                {/* Page Content */}
+                <motion.div
+                    key={location.pathname}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}
                 >
-                  {item.label}
-                </Button>
-              ))}
+                    <Outlet />
+                </motion.div>
             </Box>
-
-            {/* Stats / Time */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <Chip 
-                label={`Time: ${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`} 
-                variant="outlined" 
-                sx={{ borderColor: 'rgba(255,255,255,0.2)' }}
-              />
-               <motion.div key={wallet} initial={{ scale: 1.2 }} animate={{ scale: 1 }}>
-                <Chip 
-                  label={`₹${wallet.toFixed(2)}`} 
-                  color="success" 
-                  variant="nav"
-                  sx={{ fontWeight: 'bold', background: 'rgba(34, 197, 94, 0.2)', color: '#22C55E' }}
-                />
-              </motion.div>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-
-      <Container maxWidth="xl" sx={{ mt: 4, mb: 4, minHeight: '80vh' }}>
-        <motion.div
-           key={location.pathname}
-           initial={{ opacity: 0, y: 20 }}
-           animate={{ opacity: 1, y: 0 }}
-           transition={{ duration: 0.4 }}
-        >
-          <Outlet />
-        </motion.div>
-      </Container>
-    </>
-  );
+        </Box>
+    );
 };
 
 export default Layout;

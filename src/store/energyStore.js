@@ -3,6 +3,9 @@ import { generateSolarOutput, generateConsumption } from '../utils/energySimulat
 
 const useEnergyStore = create((set, get) => ({
   // Global State
+  user: null, // { name, role, email }
+  isAuthenticated: false,
+  
   hour: 8, // Start at 8 AM
   minute: 0,
   solarOutput: 0,
@@ -16,6 +19,18 @@ const useEnergyStore = create((set, get) => ({
 
   // Actions
   setRole: (role) => set({ role }),
+  
+  login: (email, password, role) => {
+    // Dummy Auth Logic
+    const user = {
+        name: role === 'host' ? 'Sarah Solar' : (role === 'admin' ? 'Grid Admin' : 'Dave Driver'),
+        email: email,
+        role: role
+    };
+    set({ user, isAuthenticated: true, role });
+  },
+
+  logout: () => set({ user: null, isAuthenticated: false, role: null }),
 
   // Simulation Tick (to be called every few seconds)
   tick: () => {

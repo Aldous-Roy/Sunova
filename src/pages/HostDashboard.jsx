@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Typography, Box, CircularProgress, Chip } from '@mui/material';
+import { Grid, Typography, Box, CircularProgress, Chip, useMediaQuery, useTheme } from '@mui/material';
 import GlassCard from '../components/GlassCard';
 import EnergyChart from '../components/EnergyChart';
 import useEnergyStore from '../store/energyStore';
@@ -8,16 +8,18 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import HomeIcon from '@mui/icons-material/Home';
 
 const StatCard = ({ title, value, unit, icon, color, delay }) => (
-    <GlassCard delay={delay} sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+    <GlassCard delay={delay} sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 140, width: '100%' }}>
         <Box sx={{ color: color, mb: 1 }}>{icon}</Box>
-        <Typography variant="h6" color="text.secondary">{title}</Typography>
-        <Typography variant="h3" fontWeight="bold">
+        <Typography variant="h6" color="text.secondary" sx={{ fontSize: '1rem' }}>{title}</Typography>
+        <Typography variant="h3" fontWeight="bold" sx={{ fontSize: { xs: '2rem', md: '3rem' } }}>
             {value} <span style={{ fontSize: '1rem', opacity: 0.7 }}>{unit}</span>
         </Typography>
     </GlassCard>
 );
 
 const HostDashboard = () => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const { 
         solarOutput, 
         consumption, 
@@ -31,13 +33,13 @@ const HostDashboard = () => {
 
     return (
         <Box>
-            <Typography variant="h4" sx={{ mb: 4, fontWeight: 'bold' }}>
+            <Typography variant="h4" sx={{ mb: 4, fontWeight: 'bold', fontSize: { xs: '1.75rem', md: '2.125rem' } }}>
                 Solar Host Dashboard
             </Typography>
 
             {/* Top Stats */}
-            <Grid container spacing={3} sx={{ mb: 4 }}>
-                <Grid item xs={12} md={3}>
+            <Grid container spacing={3} sx={{ mb: 4 }} alignItems="stretch">
+                <Grid item xs={12} sm={6} md={3}>
                     <StatCard 
                         title="Solar Generation" 
                         value={solarOutput.toFixed(2)} 
@@ -47,7 +49,7 @@ const HostDashboard = () => {
                         delay={0.1}
                     />
                 </Grid>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} sm={6} md={3}>
                     <StatCard 
                         title="Consumption" 
                         value={consumption.toFixed(2)} 
@@ -57,7 +59,7 @@ const HostDashboard = () => {
                         delay={0.2}
                     />
                 </Grid>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} sm={6} md={3}>
                     <StatCard 
                         title="Battery Level" 
                         value={batteryLevel.toFixed(1)} 
@@ -67,14 +69,14 @@ const HostDashboard = () => {
                         delay={0.3}
                     />
                 </Grid>
-                <Grid item xs={12} md={3}>
-                     <GlassCard delay={0.4} sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                        <Typography variant="h6" color="text.secondary">Net Surplus</Typography>
+                <Grid item xs={12} sm={6} md={3}>
+                     <GlassCard delay={0.4} sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 140, width: '100%' }}>
+                        <Typography variant="h6" color="text.secondary" sx={{ fontSize: '1rem' }}>Net Surplus</Typography>
                         <Box sx={{ position: 'relative', display: 'inline-flex', mt: 2 }}>
                             <CircularProgress 
                                 variant="determinate" 
                                 value={Math.min(100, (Math.max(0, surplus) / 5) * 100)} 
-                                size={80} 
+                                size={isMobile ? 60 : 80} 
                                 thickness={4}
                                 sx={{ color: surplus > 0 ? '#22C55E' : '#EF4444' }}
                             />
@@ -100,10 +102,10 @@ const HostDashboard = () => {
                 </Grid>
             </Grid>
 
-            <Grid container spacing={3}>
+            <Grid container spacing={3} alignItems="stretch">
                 {/* Main Graph */}
                 <Grid item xs={12} md={8}>
-                    <GlassCard delay={0.5} sx={{ height: '400px' }}>
+                    <GlassCard delay={0.5} sx={{ height: { xs: '300px', md: '400px' } }}>
                         <Typography variant="h6" gutterBottom>Real-time Energy Flow</Typography>
                         <EnergyChart data={historicalData} />
                     </GlassCard>
@@ -111,10 +113,10 @@ const HostDashboard = () => {
 
                 {/* Active Bookings / Status */}
                 <Grid item xs={12} md={4}>
-                    <GlassCard delay={0.6} sx={{ height: '400px', overflowY: 'auto' }}>
+                    <GlassCard delay={0.6} sx={{ height: { xs: 'auto', md: '400px' }, overflowY: 'auto' }}>
                         <Typography variant="h6" gutterBottom>Active Sessions</Typography>
                         {activeBookings.length === 0 ? (
-                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80%', opacity: 0.5 }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100px', opacity: 0.5 }}>
                                 <Typography>No active EV charging sessions.</Typography>
                             </Box>
                         ) : (
